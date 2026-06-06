@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Virtual Photobooth Wedding</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Montserrat,sans-serif;overflow:hidden}
+.page{position:fixed;inset:0}
+
+/* PAGE 1 */
+#landing{
+background:url('cover.jpg') center/cover no-repeat;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+text-align:center;
+}
+.names{
+font-family:'Great Vibes',cursive;
+font-size:64px;
+color:#b08a3c;
+}
+.tag{
+font-family:'Montserrat',sans-serif;
+font-weight:300;
+letter-spacing:4px;
+color:#b08a3c;
+}
+.date{
+font-family:'Cormorant Garamond',serif;
+font-size:36px;
+color:#b08a3c;
+margin-top:20px;
+}
+.start{
+margin-top:200px;
+padding:14px 30px;
+border:none;
+border-radius:999px;
+background:#faf8f4;
+color:#9b7a3b;
+font-size:18px;
+}
+.heart{margin-top:18px;color:#b08a3c}
+
+/* PAGE 2 */
+#camera{
+display:none;
+background:#000;
+color:#fff;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+.preview{
+width:80vw;
+height:72vh;
+max-width:380px;
+background:#222;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.controls{
+display:flex;
+gap:14px;
+align-items:center;
+margin-top:12px;
+}
+.switch{
+width:38px;height:38px;
+border:2px solid #fff;
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+}
+.shutter{
+width:60px;height:60px;
+border:3px solid #fff;
+border-radius:50%;
+}
+.sharebtn{
+padding:10px 16px;
+border:none;
+border-radius:999px;
+}
+
+/* PAGE 3 */
+#sharepage{
+display:none;
+background:#fff;
+padding:16px;
+}
+.wrap{
+max-width:430px;
+margin:auto;
+height:100%;
+display:flex;
+flex-direction:column;
+}
+.back{
+font-size:28px;
+margin-bottom:10px;
+cursor:pointer;
+}
+.photo{
+flex:1;
+display:flex;
+justify-content:center;
+}
+.photo img{
+width:100%;
+max-width:340px;
+border-radius:18px;
+}
+.card{
+border:1px solid #e7dfd3;
+border-radius:24px;
+padding:18px;
+}
+.title{
+text-align:center;
+font-weight:600;
+margin-bottom:12px;
+}
+.record{
+width:44px;
+height:44px;
+border:1px solid #e7dfd3;
+border-radius:50%;
+margin:10px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+cursor:pointer;
+}
+.timer,.wave{text-align:center}
+.wave{margin-bottom:12px;color:#666}
+.row{
+display:flex;
+gap:12px;
+}
+.action{
+flex:1;
+height:38px;
+border:1px solid #e7dfd3;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+color:#666;
+background:#fff;
+}
+.sharefinal{
+width:100%;
+height:52px;
+margin-top:12px;
+border:none;
+border-radius:999px;
+}
+
+/* PAGE 4 */
+#memories{
+display:none;
+background:#f7f3ed;
+}
+.header{
+height:70px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+font-weight:bold;
+color:#9b7a3b;
+border-bottom:1px solid #e7dfd3;
+}
+.content{
+height:calc(100vh - 140px);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:#777;
+}
+.emptyheart{
+font-size:52px;
+color:#c0a06a;
+margin-bottom:16px;
+}
+.bottom{
+position:fixed;
+bottom:0;left:0;right:0;
+height:70px;
+background:#fff;
+border-top:1px solid #ddd;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<div id="landing" class="page">
+<div class="names">Agis & Ilmi</div>
+<div class="tag">FOREVER STARTS HERE</div>
+<div class="date">26.03.2026</div>
+<button class="start" onclick="showCamera()">📸 Ambil Foto Yu</button>
+<div class="heart">♡</div>
+</div>
+
+<div id="camera" class="page">
+<div class="preview">Preview Kamera</div>
+<div class="controls">
+<div class="switch">🔄</div>
+<div class="shutter"></div>
+<button class="sharebtn" onclick="showShare()">Share Moment</button>
+</div>
+</div>
+
+<div id="sharepage" class="page">
+<div class="wrap">
+<div class="back" onclick="showCamera()">←</div>
+
+<div class="photo">
+<img src="frame.png" alt="Frame">
+</div>
+
+<div class="card">
+<div class="title">Share Moment</div>
+<div id="record" class="record" onclick="toggleRec()">🎤</div>
+<div class="timer">00:00</div>
+<div class="wave">▁▂▃▄▅▆▅▄▃▂▁</div>
+
+<div class="row">
+<div class="action">▶ Play</div>
+<div class="action">🗑 Hapus</div>
+</div>
+
+<button class="sharefinal" onclick="showMemories()">✨ Share Yuk!</button>
+</div>
+</div>
+</div>
+
+<div id="memories" class="page">
+<div class="header">♥ Our Memories</div>
+
+<div class="content">
+<div class="emptyheart">♡</div>
+<h3>Belum Ada Moment</h3>
+<p>Jadilah yang pertama membagikan momenmu</p>
+</div>
+
+<div class="bottom" onclick="goHome()">🏠 Home</div>
+</div>
+
+<script>
+function hideAll(){
+landing.style.display='none';
+camera.style.display='none';
+sharepage.style.display='none';
+memories.style.display='none';
+}
+function showCamera(){hideAll();camera.style.display='flex';}
+function showShare(){hideAll();sharepage.style.display='block';}
+function showMemories(){hideAll();memories.style.display='block';}
+function goHome(){hideAll();landing.style.display='flex';}
+
+let rec=false;
+function toggleRec(){
+const btn=document.getElementById('record');
+if(!rec){btn.innerHTML='⏹';rec=true;}
+else{btn.innerHTML='▶';rec=false;}
+}
+</script>
+
+</body>
+</html>
